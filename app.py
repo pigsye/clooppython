@@ -1,41 +1,15 @@
 from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
-import sys
 import os
-from Accounts.updateinformation import update_bp
-from Accounts.account import accounts_bp
-from Accounts.reports import reports_bp
-from Accounts.user import user_bp
-from Accounts.profiles import profile_bp
-from Accounts.createaccount import createaccount_bp
-from Accounts.account_stats import account_status_bp
-from Clothing.products import products_bp
-from Clothing.listings import listings_bp
-from Clothing.submissions import clothing_bp
-from Tags.tags import tags_bp
-from orders import orders_bp
-from feedbacks import feedback_bp
-from logs import logs_bp
+from admin import admin_bp
+from user import user_bp
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "Accounts"))
 
 app = Flask(__name__)
 
 # Register Blueprints
+app.register_blueprint(admin_bp)
 app.register_blueprint(user_bp)
-app.register_blueprint(createaccount_bp)
-app.register_blueprint(accounts_bp)
-app.register_blueprint(reports_bp)
-app.register_blueprint(update_bp)
-app.register_blueprint(profile_bp)
-app.register_blueprint(account_status_bp)
-app.register_blueprint(products_bp)
-app.register_blueprint(listings_bp)
-app.register_blueprint(clothing_bp)
-app.register_blueprint(tags_bp)
-app.register_blueprint(orders_bp)
-app.register_blueprint(feedback_bp)
-app.register_blueprint(logs_bp)
 
 CORS(app)
 

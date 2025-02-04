@@ -1,24 +1,27 @@
 import os
 import shelve
 
-DB_FOLDER = os.path.join(os.path.dirname(__file__), "db")
-DB_PATH_TAGS = os.path.join(DB_FOLDER, "tags")
+# Define database names
+DB_FOLDER = "db"  # Change this to the actual DB folder path
+DB_NAMES = ["accounts", "feedback", "logs", "orders", "products", "ratings", "reports", "submissions", "tags", "wishlist"]
 
-with shelve.open(DB_PATH_TAGS, writeback=True) as tags_db:
-    if "valid_tags" in tags_db:
-        valid_tags_data = tags_db["valid_tags"]
-        tag_names = valid_tags_data["name"]
-        default_description = valid_tags_data["description"]
+def load_database(db_name):
+    db_path = os.path.join(DB_FOLDER, db_name)
+    try:
+        with shelve.open(db_path) as db:
+            print(f"\n📂 Database: {db_name}")
+            if not db:
+                print("⚠️  No records found.")
+            else:
+                for key, value in db.items():
+                    print(f"🔑 {key}: {value}")
+    except Exception as e:
+        print(f"❌ Error reading {db_name}: {e}")
 
-        # Delete the old entry
-        del tags_db["valid_tags"]
+def main():
+    print("\n🔍 Extracting all database contents...\n")
+    for db in DB_NAMES:
+        load_database(db)
 
-        # Create individual tag entries
-        for idx, tag_name in enumerate(tag_names, start=1):
-            tags_db[str(idx)] = {
-                "id": str(idx),
-                "name": tag_name,
-                "description": default_description,
-            }
-
-print("Tags migrated successfully!")
+if __name__ == "__main__":
+    main()
