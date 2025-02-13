@@ -7,7 +7,7 @@ admin_profile_bp = Blueprint('profile', __name__)
 # Define paths
 DB_FOLDER = os.path.join(os.path.dirname(__file__), "../../db")
 DB_PATH = os.path.join(DB_FOLDER, "accounts")
-UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "../../uploads")
+UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "../../api/uploads")
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 # Ensure the upload folder exists

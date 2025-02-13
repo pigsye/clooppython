@@ -9,7 +9,7 @@ admin_listings_bp = Blueprint("listings", __name__)
 DB_FOLDER = os.path.join(os.path.dirname(__file__), "../../db")
 DB_PATH_PRODUCTS = os.path.join(DB_FOLDER, "products")
 DB_PATH_ACCOUNTS = os.path.join(DB_FOLDER, "accounts")
-UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "../../uploads")
+UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "../../api/uploads")
 
 # Ensure the upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
