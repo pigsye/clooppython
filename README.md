@@ -1,18 +1,49 @@
-# Cloop Python End
+# 🐍 Cloop Flask Backend
 
-How to set this up:
+This is the Flask backend for Cloop, a clothing swap platform. It provides API endpoints for user authentication, product management, messaging, and more.
 
-run ```python3 -m venv venv```
+## 📌 Requirements
+	•	Python 3.8+
+	•	pip (Python package manager)
+	•	Virtual Environment (venv)
 
-if it doesnt work, close the app and open it again. I wish I was joking too.
+## 🚀 Setup & Installation
 
-then depending on what OS you are running, choose the next command very very carefully.
+### 1️⃣ Clone the Repository
+   ```bash
+    git clone https://github.com/pigsye/clooppython
+    cd clooppython
+   ```
 
-If you are on MacOS or Linux (YOTL!!), please run
-```source venv/bin/activate```
+### 2️⃣ Create a Virtual Environment
+   On Windows:
+   ```bash
+   python -m venv venv
+   ```
+   On Mac:
+   ```bash
+   python3 -m venv venv
+   ```
 
-If you are on Windows, please run ```venv\Scripts\Activate```
+### 3️⃣ Activate the Virtual Environment
 
-Then, run  ```pip install -r requirements.txt```
+   On Windows:
+   ```bash
+   source venv/bin/activate
+   ```
+   On Mac:
+   ```bash
+   venv\Scripts\activate
+   ```
 
-Please do this in VS Code I havent tested this in PyCharm yet thankyeww
+### 4️⃣ Install Dependencies
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### 5️⃣ Run the Flask Server
+
+   ```bash
+   flask run
+   ```
