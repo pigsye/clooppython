@@ -24,7 +24,7 @@ def get_all_tags():
         return jsonify({"error": str(e)}), 500
 
 
-@admin_tags_bp.route('/create', methods=['POST'])
+@admin_tags_bp.route('/tags/create', methods=['POST'])
 def create_tag():
     try:
         data = request.json
@@ -62,7 +62,7 @@ def create_tag():
         return jsonify({"error": str(e)}), 500
 
 
-@admin_tags_bp.route('/delete', methods=['POST'])
+@admin_tags_bp.route('/tags/delete', methods=['POST'])
 def delete_tag():
     """
     Delete a tag from the tags.db
@@ -87,7 +87,7 @@ def delete_tag():
         return jsonify({"error": str(e)}), 500
 
 
-@admin_tags_bp.route('/update', methods=['POST'])
+@admin_tags_bp.route('/tags/update', methods=['POST'])
 def update_tag():
     try:
         data = request.json

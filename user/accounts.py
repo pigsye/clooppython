@@ -71,42 +71,57 @@ def upload_profile_picture(user_id):
     """
     try:
         if "file" not in request.files:
+            print("❌ No file found in request.")  # Debugging log
             return jsonify({"error": "No file provided"}), 400
 
         file = request.files["file"]
 
         if file.filename == "":
+            print("❌ No selected file.")  # Debugging log
             return jsonify({"error": "No selected file"}), 400
 
         if file and allowed_file(file.filename):
-            filename = secure_filename(f"user_{user_id}_{file.filename}")
+            filename = secure_filename(f"user_{user_id}.jpg")  # ✅ Always save as JPG
             filepath = os.path.join(UPLOAD_FOLDER, filename)
 
+            # Ensure upload directory exists
+            os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
             # ✅ Open image using PIL
-            image = Image.open(file)
+            try:
+                image = Image.open(file)
+                image = image.convert("RGB")  # Convert to RGB to prevent format errors
 
-            # ✅ Resize (Maintain Aspect Ratio, Max Width: 800px)
-            max_width = 800
-            if image.width > max_width:
-                height = int((max_width / image.width) * image.height)
-                image = image.resize((max_width, height), Image.ANTIALIAS)
+                # ✅ Resize (Maintain Aspect Ratio, Max Width: 800px)
+                max_width = 800
+                if image.width > max_width:
+                    height = int((max_width / image.width) * image.height)
+                    image = image.resize((max_width, height), Image.LANCZOS)  # ✅ Use LANCZOS for Pillow v10+
 
-            # ✅ Save with Compression
-            image.save(filepath, format="JPEG", quality=85, optimize=True)
+                # ✅ Save with Compression
+                image.save(filepath, format="JPEG", quality=85, optimize=True)
+            except Exception as img_err:
+                print(f"❌ Error processing image: {img_err}")  # Debugging log
+                return jsonify({"error": "Invalid image file."}), 400
 
             # ✅ Update Database Entry
             with shelve.open(DB_PATH_ACCOUNTS, writeback=True) as db:
-                if str(user_id) not in db:
+                user_key = str(user_id)  # ✅ Ensure key is string
+
+                if user_key not in db:
+                    print(f"❌ User {user_id} not found in database.")
                     return jsonify({"error": "User not found"}), 404
 
-                db[str(user_id)]["pfp"] = filename  
+                db[user_key]["pfp"] = filename
 
+            print(f"✅ Profile picture saved: {filename}")  # Debugging log
             return jsonify({"message": "Profile picture updated successfully!", "filename": filename}), 200
 
+        print("❌ Invalid file type.")  # Debugging log
         return jsonify({"error": "Invalid file type"}), 400
 
     except Exception as e:
-        print(f"Error during upload: {str(e)}")  # Debugging log
+        print(f"❌ Unexpected error: {e}")  # Debugging log
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 

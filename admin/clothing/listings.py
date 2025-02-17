@@ -3,7 +3,7 @@ import shelve
 from flask import Blueprint, jsonify, request
 
 # Blueprint for products
-admin_listings_bp = Blueprint("listings", __name__)
+admin_listings_bp = Blueprint("listings", __name__, url_prefix="/products")
 
 # Paths to the database and upload folder
 DB_FOLDER = os.path.join(os.path.dirname(__file__), "../../db")
@@ -14,6 +14,11 @@ UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "../../api/uploads")
 # Ensure the upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+
+def allowed_file(filename):
+    """Check if the uploaded file is a valid image format."""
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @admin_listings_bp.route('/listing/<int:product_id>', methods=['GET'])
 def get_product(product_id):
@@ -59,45 +64,62 @@ def update_product(product_id):
     Update the product's name, user ID, tags, or image.
     """
     try:
+        print(f"🔄 Updating product {product_id}")
+
         # Open the products database
         with shelve.open(DB_PATH_PRODUCTS, writeback=True) as products_db:
             # Fetch the product
             product = products_db.get(str(product_id))
             if not product:
+                print(f"❌ Product {product_id} not found in DB")
                 return jsonify({"error": "Product not found"}), 404
 
-            # Update the product name
+            # Extract form data (only works with multipart/form-data requests)
             name = request.form.get("name")
+            customer_id = request.form.get("customer_id")
+            tags = request.form.get("tags")
+
+            # Update name
             if name:
                 product["name"] = name
+                print(f"✅ Updated name: {name}")
 
-            # Update the customer ID
-            customer_id = request.form.get("customer_id")
+            # Update customer ID
             if customer_id:
                 product["customer_id"] = int(customer_id)
+                print(f"✅ Updated customer_id: {customer_id}")
 
             # Update tags
-            tags = request.json.get("tags")
-            if tags and isinstance(tags, list):
-                product["tags"] = tags
+            if tags:
+                product["tags"] = tags.split(",")
+                print(f"✅ Updated tags: {tags}")
 
             # Handle image upload
             if "image" in request.files:
                 image = request.files["image"]
-                if image:
+                if image and allowed_file(image.filename):
                     # Save the image using the naming convention
                     image_filename = f"product_{product_id}.jpg"
                     image_path = os.path.join(UPLOAD_FOLDER, image_filename)
+
+                    # Debug: Check if file is being received
+                    print(f"📷 Received file: {image.filename}, saving as: {image_filename}")
+
+                    # Save the new image
                     image.save(image_path)
+
+                    # Update image URL in database
                     product["image_url"] = f"/uploads/{image_filename}"
+                    print(f"✅ Updated image URL: {product['image_url']}")
 
             # Save changes to the database
             products_db[str(product_id)] = product
 
-        return jsonify({"message": "Product updated successfully!"}), 200
+        print(f"✅ Product {product_id} updated successfully!")
+        return jsonify({"message": "Product updated successfully!", "product": product}), 200
 
     except Exception as e:
-        print(f"ERROR: {e}")
+        print(f"🚨 ERROR: {e}")
         return jsonify({"error": str(e)}), 500
 
 @admin_listings_bp.route('/delete/<int:product_id>', methods=['DELETE'])

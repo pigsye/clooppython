@@ -13,7 +13,7 @@ DB_PATH_REPORT = os.path.join(DB_FOLDER, "reports")
 DB_PATH_ACCOUNT = os.path.join(DB_FOLDER, "accounts")
 
 
-@admin_reports_bp.route('/', methods=['GET'])
+@admin_reports_bp.route('/reports', methods=['GET'])
 def get_reports():
     try:
         account_usernames = {}
@@ -37,7 +37,7 @@ def get_reports():
         return jsonify({"error": str(e)}), 500
 
 
-@admin_reports_bp.route('/deletereport', methods=['POST'])
+@admin_reports_bp.route('/reports/deletereport', methods=['POST'])
 def delete_report():
     try:
         # Parse the JSON payload
@@ -58,7 +58,7 @@ def delete_report():
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 
-@admin_reports_bp.route('/actonreport', methods=['POST'])
+@admin_reports_bp.route('/reports/actonreport', methods=['POST'])
 def act_on_report():
     """
     Disable the user associated with a report and delete the report.
@@ -98,7 +98,7 @@ def act_on_report():
     except Exception as e:
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
-@admin_reports_bp.route('/create', methods=['POST'])
+@admin_reports_bp.route('/reports/create', methods=['POST'])
 def create_report():
     """
     Create a new report in the database.
@@ -133,7 +133,7 @@ def create_report():
     except Exception as e:
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
-@admin_reports_bp.route('/edit', methods=['POST'])
+@admin_reports_bp.route('/reports/edit', methods=['POST'])
 def edit_report():
     """
     Edit an existing report's details.

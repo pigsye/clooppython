@@ -1,31 +1,68 @@
 import shelve
 import os
 
-# Define the database path
-DB_FOLDER = os.path.join(os.path.dirname(__file__), "db")
-DB_PATH_PRODUCTS = os.path.join(DB_FOLDER, "products")
+# Path to the products database
+DB_PATH_PRODUCTS = "db/products"
 
-def read_products_db():
-    """Read and print all entries in products.db"""
-    try:
-        with shelve.open(DB_PATH_PRODUCTS) as db:
-            if not db:
-                print("⚠️ No products found in the database.")
-                return
-            
-            print("📦 All Products in Database:\n")
-            for product_id, product_data in db.items():
-                print(f"🆔 Product ID: {product_id}")
-                print(f"📌 Name: {product_data.get('name', 'N/A')}")
-                print(f"👤 Customer ID: {product_data.get('customer_id', 'N/A')}")
-                print(f"🏷️ Tags: {', '.join(product_data.get('tags', []))}")
-                print(f"❤️ Wishlisted Users: {product_data.get('wishlisted_users', {})}")
-                print(f"🖼️ Image URL: {product_data.get('image_url', 'No image provided')}")
-                print("=" * 40)
-    
-    except Exception as e:
-        print(f"❌ Error reading products.db: {e}")
+a = {
+    "1": {
+        "id": 1,
+        "name": f"Y2K Camisole",
+        "customer_id": "1",
+        "tags": [f"Women"],
+        "description": f"Its a top",
+        "image_url": f"/uploads/1.jpeg",
+        "wishlisted_users": {}
+    },
+    "2": {
+        "id": 2,
+        "name": f"Yoga Pants",
+        "customer_id": "2",
+        "tags": [f"Women"],
+        "description": f"Its pants",
+        "image_url": f"/uploads/2.jpeg",
+        "wishlisted_users": {}
+    },
+    "3": {
+        "id": 3,
+        "name": f"Denim Skirt",
+        "customer_id": "3",
+        "tags": [f"Women"],
+        "description": f"Its a skirt",
+        "image_url": f"/uploads/3.jpeg",
+        "wishlisted_users": {}
+    },
+    "4": {
+        "id": 4,
+        "name": f"Parka",
+        "customer_id": "1",
+        "tags": [f"Women"],
+        "description": f"Its a parka",
+        "image_url": f"/uploads/4.jpeg",
+        "wishlisted_users": {}
+    },
+    "5": {
+        "id": 5,
+        "name": f"Navy Polo T",
+        "customer_id": "1",
+        "tags": [f"Women"],
+        "description": f"Its a Polo T",
+        "image_url": f"/uploads/5.jpeg",
+        "wishlisted_users": {}
+    },
+    "6": {
+        "id": 6,
+        "name": f"Button Up Shirt",
+        "customer_id": "1",
+        "tags": [f"Women"],
+        "description": f"Its a shirt",
+        "image_url": f"/uploads/6.jpeg",
+        "wishlisted_users": {}
+    }
+}
 
-# Run the function
-if __name__ == "__main__":
-    read_products_db()
+# Overwrite the products database with new data
+with shelve.open(DB_PATH_PRODUCTS, writeback=True) as products_db:
+    products_db.clear()  # Remove existing data
+    products_db.update(a)  # Insert new data
+    print("✅ Successfully replaced products.db with new data!")
