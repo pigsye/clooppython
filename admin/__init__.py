@@ -7,7 +7,7 @@ from .logs import admin_log_bp
 from .orders import admin_order_bp
 from .tags import admin_tag_bp
 
-admin_bp = Blueprint("admin_logs", __name__, url_prefix="/api/admin")
+admin_bp = Blueprint("admin_logs", __name__)
 
 admin_blueprints = [
     admin_account_bp,

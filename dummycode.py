@@ -1,27 +1,31 @@
-import os
 import shelve
+import os
 
-# Define database names
-DB_FOLDER = "db"  # Change this to the actual DB folder path
-DB_NAMES = ["accounts", "feedback", "logs", "orders", "products", "ratings", "reports", "submissions", "tags", "wishlist"]
+# Define the database path
+DB_FOLDER = os.path.join(os.path.dirname(__file__), "db")
+DB_PATH_PRODUCTS = os.path.join(DB_FOLDER, "products")
 
-def load_database(db_name):
-    db_path = os.path.join(DB_FOLDER, db_name)
+def read_products_db():
+    """Read and print all entries in products.db"""
     try:
-        with shelve.open(db_path) as db:
-            print(f"\n📂 Database: {db_name}")
+        with shelve.open(DB_PATH_PRODUCTS) as db:
             if not db:
-                print("⚠️  No records found.")
-            else:
-                for key, value in db.items():
-                    print(f"🔑 {key}: {value}")
+                print("⚠️ No products found in the database.")
+                return
+            
+            print("📦 All Products in Database:\n")
+            for product_id, product_data in db.items():
+                print(f"🆔 Product ID: {product_id}")
+                print(f"📌 Name: {product_data.get('name', 'N/A')}")
+                print(f"👤 Customer ID: {product_data.get('customer_id', 'N/A')}")
+                print(f"🏷️ Tags: {', '.join(product_data.get('tags', []))}")
+                print(f"❤️ Wishlisted Users: {product_data.get('wishlisted_users', {})}")
+                print(f"🖼️ Image URL: {product_data.get('image_url', 'No image provided')}")
+                print("=" * 40)
+    
     except Exception as e:
-        print(f"❌ Error reading {db_name}: {e}")
+        print(f"❌ Error reading products.db: {e}")
 
-def main():
-    print("\n🔍 Extracting all database contents...\n")
-    for db in DB_NAMES:
-        load_database(db)
-
+# Run the function
 if __name__ == "__main__":
-    main()
+    read_products_db()

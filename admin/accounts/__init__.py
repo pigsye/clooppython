@@ -7,6 +7,7 @@ from .profiles import admin_profile_bp
 from .reports import admin_reports_bp
 from .updateinformation import admin_update_bp
 from .user import admin_user_bp
+from .login import admin_auth_bp
 
 admin_account_bp = Blueprint("admin_account", __name__, url_prefix="/api/admin")
 
@@ -17,7 +18,8 @@ admin_blueprints = [
     admin_profile_bp,
     admin_reports_bp,
     admin_update_bp,
-    admin_user_bp
+    admin_user_bp,
+    admin_auth_bp
 ]
 
 for bp in admin_blueprints:

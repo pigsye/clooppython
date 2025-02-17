@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 import os
 import shelve
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 user_products_bp = Blueprint("user_products", __name__)
 
@@ -32,7 +33,8 @@ def get_products():
             for key in sorted(db.keys(), key=int):
                 product = db[key]
                 product["seller_username"] = get_username(product["customer_id"])  # Fetch username
-                products.append(product)
+                if product.get("is_listed", True):  # Exclude delisted products (default to True if missing)
+                    products.append(product)
 
         return jsonify({"products": products}), 200
 
@@ -101,4 +103,37 @@ def toggle_wishlist(product_id):
 
     except Exception as e:
         print(f"❌ DEBUG ERROR: {str(e)}")  # Print error for debugging
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+    
+@user_products_bp.route("/products/<int:product_id>/toggle-listing", methods=["POST"])
+@jwt_required()
+def toggle_listing(product_id):
+    """
+    Toggle a product's listing status (list/unlist).
+    Only the product owner can perform this action.
+    """
+    try:
+        user = get_jwt_identity()  # Get user from JWT
+        user_id = str(user["id"])  # Ensure user ID is a string
+
+        with shelve.open(DB_PATH_PRODUCTS, writeback=True) as db:
+            product = db.get(str(product_id))
+
+            if not product:
+                return jsonify({"error": "Product not found"}), 404
+
+            # Ensure only the owner can toggle listing status
+            if str(product["customer_id"]) != user_id:
+                return jsonify({"error": "Permission denied"}), 403
+
+            # Toggle listing status
+            product["is_listed"] = not product.get("is_listed", True)
+            db[str(product_id)] = product  # Save changes
+
+            return jsonify({
+                "message": "Product listing status updated",
+                "is_listed": product["is_listed"]
+            }), 200
+
+    except Exception as e:
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500

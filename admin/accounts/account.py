@@ -9,7 +9,7 @@ DB_FOLDER = os.path.join(os.path.dirname(__file__), "../../db")
 DB_PATH = os.path.join(DB_FOLDER, "accounts")  # Path to the `accounts` database file
 DEFAULT_PFP_URL = "/account.svg"
 
-@admin_accounts_bp.route('/', methods=['GET'])
+@admin_accounts_bp.route('/account', methods=['GET'])
 def get_accounts():
     accounts = []
     with shelve.open(DB_PATH) as db:

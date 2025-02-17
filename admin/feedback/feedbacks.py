@@ -10,7 +10,7 @@ DB_PATH_FEEDBACK = os.path.join(DB_FOLDER, "feedback")
 DB_PATH_ACCOUNTS = os.path.join(DB_FOLDER, "accounts")
 
 
-@admin_feedbacks_bp.route('/', methods=['GET'])
+@admin_feedbacks_bp.route('/feedback', methods=['GET'])
 def get_all_feedbacks():
     """
     Fetch all feedbacks with user IDs resolved to usernames.
@@ -40,7 +40,7 @@ def get_all_feedbacks():
         return jsonify({"error": str(e)}), 500
 
 
-@admin_feedbacks_bp.route('/<int:feedback_id>', methods=['GET'])
+@admin_feedbacks_bp.route('feedback/<int:feedback_id>', methods=['GET'])
 def get_feedback_detail(feedback_id):
     """
     Fetch details of a specific feedback.
@@ -71,7 +71,7 @@ def get_feedback_detail(feedback_id):
         return jsonify({"error": str(e)}), 500
 
 
-@admin_feedbacks_bp.route('/delete', methods=['POST'])
+@admin_feedbacks_bp.route('feedback/delete', methods=['POST'])
 def delete_feedback():
     """
     Delete a feedback by its ID.
@@ -93,7 +93,7 @@ def delete_feedback():
         return jsonify({"error": str(e)}), 500
 
 
-@admin_feedbacks_bp.route('/create', methods=['POST'])
+@admin_feedbacks_bp.route('feedback/create', methods=['POST'])
 def create_feedback():
     """
     Create a new feedback entry.
@@ -133,7 +133,7 @@ def create_feedback():
         return jsonify({"error": str(e)}), 500
 
 
-@admin_feedbacks_bp.route('/update', methods=['POST'])
+@admin_feedbacks_bp.route('feedback/update', methods=['POST'])
 def update_feedback():
     """
     Update an existing feedback entry, including the user ID and feedback text.

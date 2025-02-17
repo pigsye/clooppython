@@ -2,7 +2,7 @@ import os
 import shelve
 from flask import Blueprint, jsonify, request
 
-admin_clothings_bp = Blueprint("clothing", __name__)
+admin_clothings_bp = Blueprint("clothing", __name__, url_prefix="/clothing")
 
 # Define paths to the database files
 DB_FOLDER = os.path.join(os.path.dirname(__file__), "../../db")
@@ -51,13 +51,17 @@ def add_product():
             while str(product_id) in products_db:
                 product_id += 1
 
-            # Add the new product
+            # ✅ Ensure the image URL is transferred correctly
+            image_url = data.get("image_url")  # Get the image URL
+
+            # Add the new product with the image URL
             new_product = {
                 "id": product_id,
                 "name": data["name"],
                 "customer_id": data["customerId"],
                 "tags": data.get("tags", []),
                 "wishlisted_users": {},
+                "image_url": image_url,  # ✅ Store image URL
             }
             products_db[str(product_id)] = new_product
 

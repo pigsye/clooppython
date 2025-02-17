@@ -10,7 +10,7 @@ DB_PATH_PRODUCTS = os.path.join(DB_FOLDER, "products")
 DB_PATH_ACCOUNT = os.path.join(DB_FOLDER, "accounts")
 
 
-@admin_products_bp.route('/', methods=['GET'])
+@admin_products_bp.route('/products', methods=['GET'])
 def get_all_products():
     """
     Get all products from the products database and return only selected fields.

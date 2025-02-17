@@ -9,7 +9,7 @@ DB_PATH_LOGS = os.path.join(DB_FOLDER, "logs")
 DB_PATH_ACCOUNTS = os.path.join(DB_FOLDER, "accounts")
 
 
-@admin_logs_bp.route("/", methods=["GET"])
+@admin_logs_bp.route("/logs", methods=["GET"])
 def get_all_logs():
     """
     Get a summary of all chat logs.
@@ -30,7 +30,7 @@ def get_all_logs():
         return jsonify({"error": str(e)}), 500
 
 
-@admin_logs_bp.route("/<int:log_id>", methods=["GET"])
+@admin_logs_bp.route("/logs/<int:log_id>", methods=["GET"])
 def get_chat_log(log_id):
     """
     Get details of a specific chat log.
@@ -54,7 +54,7 @@ def get_chat_log(log_id):
         return jsonify({"error": str(e)}), 500
 
 
-@admin_logs_bp.route("/create", methods=["POST"])
+@admin_logs_bp.route("/logs/create", methods=["POST"])
 def create_chat_log():
     """
     Create a new chat log between two users.
@@ -93,7 +93,7 @@ def create_chat_log():
         return jsonify({"error": str(e)}), 500
 
 
-@admin_logs_bp.route('/<int:log_id>', methods=['DELETE'])
+@admin_logs_bp.route('/logs/<int:log_id>', methods=['DELETE'])
 def delete_chat_log(log_id):
     """
     Delete a specific chat log by its ID.
@@ -110,7 +110,7 @@ def delete_chat_log(log_id):
         return jsonify({"error": str(e)}), 500
 
 
-@admin_logs_bp.route('/<int:log_id>/update_users', methods=['POST'])
+@admin_logs_bp.route('/logs/<int:log_id>/update_users', methods=['POST'])
 def update_chat_users(log_id):
     """
     Update the users in a specific chat log.

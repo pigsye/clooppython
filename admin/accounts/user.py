@@ -16,7 +16,7 @@ DB_PATH_RATINGS = os.path.join(DB_FOLDER, "ratings")
 
 DEFAULT_PFP_URL = "/account.svg"
 
-@admin_user_bp.route('/<int:user_id>', methods=['GET'])
+@admin_user_bp.route('user/<int:user_id>', methods=['GET'])
 def get_user_data(user_id):
     try:
         # Fetch account information

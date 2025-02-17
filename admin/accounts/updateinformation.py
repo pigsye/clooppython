@@ -1,8 +1,10 @@
 import os
 import shelve
 from flask import Blueprint, request, jsonify
+from flask_bcrypt import Bcrypt
 
 admin_update_bp = Blueprint('update', __name__)
+bcrypt = Bcrypt()  # Initialize bcrypt
 
 # Path to the accounts database
 DB_FOLDER = os.path.join(os.path.dirname(__file__), "../../db")
@@ -33,9 +35,8 @@ def update_information(user_id):
 
             # Update the field
             if update_field == "password":
-                # Hash the password before saving
-                import hashlib
-                hashed_password = hashlib.sha256(new_value.encode()).hexdigest()
+                # ✅ Hash the password using bcrypt
+                hashed_password = bcrypt.generate_password_hash(new_value).decode("utf-8")
                 db[user_key]["password"] = hashed_password
             else:
                 db[user_key][update_field] = new_value

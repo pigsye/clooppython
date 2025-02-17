@@ -1,11 +1,25 @@
 from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 import os
-from admin import admin_bp
-from user import user_bp
-
+from flask_mail import Mail
 
 app = Flask(__name__)
+jwt = JWTManager(app)
+app.config["JWT_SECRET_KEY"] = "the-29th-of-september"  # Change this to a strong secret key
+
+# ✅ Email Configuration
+app.config["MAIL_SERVER"] = "smtp.gmail.com"  # Change this if using another provider
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = "eayancheong@gmail.com"  # Your email
+app.config["MAIL_PASSWORD"] = "gsdx dxps bqzr jnsv"  # Use an App Password for security
+app.config["MAIL_DEFAULT_SENDER"] = "eayancheong@gmail.com"  # Default sender
+
+mail = Mail(app)
+
+from admin import admin_bp
+from user import user_bp
 
 # Register Blueprints
 app.register_blueprint(admin_bp)

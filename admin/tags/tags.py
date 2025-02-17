@@ -10,7 +10,7 @@ DB_FOLDER = os.path.join(os.path.dirname(__file__), "../../db")
 DB_PATH_TAGS = os.path.join(DB_FOLDER, "tags")
 
 
-@admin_tags_bp.route('/', methods=['GET'])
+@admin_tags_bp.route('/tags', methods=['GET'])
 def get_all_tags():
     """
     Retrieve all tags with their names and descriptions.

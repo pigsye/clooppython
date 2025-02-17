@@ -1,11 +1,11 @@
 import os
 import shelve
 from flask import Blueprint, request, jsonify
-import hashlib
+from flask_bcrypt import Bcrypt
 
 admin_createaccount_bp = Blueprint('createaccount', __name__)
+bcrypt = Bcrypt()
 
-# Define the path to the database folder and accounts database file
 DB_FOLDER = os.path.join(os.path.dirname(__file__), "../../db")
 DB_PATH = os.path.join(DB_FOLDER, "accounts")
 
@@ -17,7 +17,7 @@ def create_account():
     if not data.get('name') or not data.get('email') or not data.get('password'):
         return jsonify({"error": "All fields are required"}), 400
 
-    with shelve.open(DB_PATH) as db:
+    with shelve.open(DB_PATH, writeback=True) as db:
         # Check for duplicate email
         for account in db.values():
             if account["email"] == data["email"]:
@@ -26,23 +26,26 @@ def create_account():
         # Generate a new unique ID
         account_id = str(len(db) + 1)
 
-        # Create account object
+        # Hash password with bcrypt
+        hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+
+        # Create new user object
         new_account = {
             "id": account_id,
             "username": data['name'],
             "email": data['email'],
-            "disabled": False,
-            "disabled_until": None,
-            "password": hashlib.sha256(data['password'].encode()).hexdigest()  # Store hashed passwords in production
+            "password": hashed_password,  # Securely hashed password
+            "role": "user",  # Default role
+            "status": "active",  # User is active by default
+            "failed_attempts": 0,  # Track failed login attempts
+            "disabled": False,  # Keep existing structure
+            "disabled_until": None,  # Keep existing structure
         }
 
-        info_to_send_back = {
-            "id": account_id,
-            "username": data['name'],
-            "email": data['email']
-        }
-
-        # Save to Shelve
+        # Save to database
         db[account_id] = new_account
 
-    return jsonify({"message": "Account created successfully", "account": info_to_send_back}), 201
+    return jsonify({
+        "message": "Account created successfully",
+        "account": {"id": account_id, "username": data['name'], "email": data['email']}
+    }), 201
