@@ -43,8 +43,8 @@ app.add_url_rule('/uploads/products/<path:filename>', 'products', lambda filenam
 # Example route to test the server
 @app.route('/')
 def home():
-    return jsonify({"message": "Welcome to the Flask backend!"})
+    return jsonify({"yes": "it works"})
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)

@@ -1,0 +1,16 @@
+{
+    "1": {
+        "rating1": {
+            "rater": "Alice",
+            "score": "5"
+        },
+        "rating2": {
+            "rater": "Bob",
+            "score": "4"
+        },
+        "rating3": {
+            "rater": "Eve",
+            "score": "3"
+        }
+    }
+}

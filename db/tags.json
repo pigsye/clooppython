@@ -1,0 +1,72 @@
+{
+    "2": {
+        "id": "2",
+        "name": "Pants",
+        "description": "Default description"
+    },
+    "6": {
+        "id": "6",
+        "name": "Kids",
+        "description": "Default description"
+    },
+    "8": {
+        "id": "8",
+        "name": "Medium",
+        "description": "Default description"
+    },
+    "11": {
+        "id": "11",
+        "name": "Wool",
+        "description": "Default description"
+    },
+    "13": {
+        "id": "13",
+        "name": "Casual",
+        "description": "Default description"
+    },
+    "4": {
+        "id": "4",
+        "name": "Women",
+        "description": "Default description"
+    },
+    "1": {
+        "id": "1",
+        "name": "Shirt",
+        "description": "Default description"
+    },
+    "3": {
+        "id": "3",
+        "name": "Jacket",
+        "description": "Default description"
+    },
+    "5": {
+        "id": "5",
+        "name": "Mens",
+        "description": "Default description"
+    },
+    "7": {
+        "id": "7",
+        "name": "Small",
+        "description": "Default description"
+    },
+    "9": {
+        "id": "9",
+        "name": "Large",
+        "description": "Default description"
+    },
+    "10": {
+        "id": "10",
+        "name": "Cotton",
+        "description": "Default description"
+    },
+    "12": {
+        "id": "12",
+        "name": "Formal",
+        "description": "Default description"
+    },
+    "14": {
+        "id": "14",
+        "name": "Jacketg",
+        "description": "tag description"
+    }
+}

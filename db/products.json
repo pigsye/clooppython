@@ -1,0 +1,72 @@
+{
+    "2": {
+        "id": 2,
+        "name": "Yoga Pants",
+        "customer_id": "2",
+        "tags": [
+            "Women"
+        ],
+        "description": "Its pants",
+        "image_url": "/uploads/2.jpeg",
+        "wishlisted_users": {}
+    },
+    "6": {
+        "id": 6,
+        "name": "Button Up Shirt",
+        "customer_id": "1",
+        "tags": [
+            "Women"
+        ],
+        "description": "Its a shirt",
+        "image_url": "/uploads/6.jpeg",
+        "wishlisted_users": {},
+        "is_listed": true
+    },
+    "4": {
+        "id": 4,
+        "name": "Parka",
+        "customer_id": "1",
+        "tags": [
+            "Women"
+        ],
+        "description": "Its a parka",
+        "image_url": "/uploads/4.jpeg",
+        "wishlisted_users": {},
+        "is_listed": true
+    },
+    "3": {
+        "id": 3,
+        "name": "Denim Skirt",
+        "customer_id": "3",
+        "tags": [
+            "Women"
+        ],
+        "description": "Its a skirt",
+        "image_url": "/uploads/3.jpeg",
+        "wishlisted_users": {}
+    },
+    "5": {
+        "id": 5,
+        "name": "Navy Polo T",
+        "customer_id": "1",
+        "tags": [
+            "Women"
+        ],
+        "description": "Its a Polo T",
+        "image_url": "/uploads/5.jpeg",
+        "wishlisted_users": {},
+        "is_listed": true
+    },
+    "1": {
+        "id": 1,
+        "name": "Y2K Camisole",
+        "customer_id": "1",
+        "tags": [
+            "Women"
+        ],
+        "description": "Its a top",
+        "image_url": "/uploads/1.jpeg",
+        "wishlisted_users": {},
+        "is_listed": false
+    }
+}

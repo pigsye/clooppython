@@ -1,0 +1,20 @@
+{
+    "2": {
+        "id": "2",
+        "customerId": "2",
+        "reportedBy": "1",
+        "reason": "this is a user report"
+    },
+    "1": {
+        "id": "1",
+        "customerId": "1",
+        "reportedBy": "12",
+        "reason": "Meow :3"
+    },
+    "3": {
+        "id": "3",
+        "customerId": "2",
+        "reportedBy": "8",
+        "reason": "He was mean"
+    }
+}

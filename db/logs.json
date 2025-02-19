@@ -1,0 +1,199 @@
+{
+    "4": {
+        "user1": "3",
+        "user2": "2",
+        "logs": []
+    },
+    "1738694785": {
+        "user1": 1,
+        "user2": 4,
+        "logs": [
+            {
+                "user": 1,
+                "timestamp": 1738694785.2501812,
+                "message": "dwqd"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694786.174708,
+                "message": "dwqdqwd"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694786.5702982,
+                "message": "wd"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694786.744469,
+                "message": "d"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694786.9137752,
+                "message": "qw"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694948.076524,
+                "message": "dqwdqwd"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694948.254814,
+                "message": "d"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694948.4003258,
+                "message": "w"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694948.546006,
+                "message": "q"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694948.717091,
+                "message": "d"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694948.863061,
+                "message": "qw"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694951.020949,
+                "message": "regerger"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694952.7778199,
+                "message": "gregergerg"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694954.226302,
+                "message": "greger"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694955.201317,
+                "message": "gregerg"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694955.5873659,
+                "message": "ger"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694955.83724,
+                "message": "gre"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694956.036897,
+                "message": "g"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694956.2028532,
+                "message": "er"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694956.386501,
+                "message": "ge"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694956.520702,
+                "message": "r"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694956.696206,
+                "message": "ger"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694956.8435571,
+                "message": "g"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694957.014122,
+                "message": "er"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738694957.1743958,
+                "message": "re"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738721597.657606,
+                "message": "huh"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738721599.5912142,
+                "message": "17675652"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738721604.5898,
+                "message": "!@#$$%^&*(())"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738721607.524409,
+                "message": "?>><"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738721615.495615,
+                "message": "~"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738721645.515713,
+                "message": "xsb xs"
+            },
+            {
+                "user": 1,
+                "timestamp": 1738721647.293855,
+                "message": "ccscs"
+            }
+        ]
+    },
+    "3": {
+        "user1": "1",
+        "user2": "2",
+        "logs": [
+            {
+                "user": "1",
+                "timestamp": 1739774146.4592168,
+                "message": "Chat started"
+            },
+            {
+                "user": "1",
+                "timestamp": 1739774146.459219,
+                "message": "🔄 Swap request for product 2."
+            },
+            {
+                "user": "1",
+                "timestamp": 1739774186.1242938,
+                "message": "dqoiwoidn"
+            },
+            {
+                "user": "1",
+                "timestamp": 1739780293.406944,
+                "message": "🔄 Swap request for product 2."
+            }
+        ]
+    }
+}

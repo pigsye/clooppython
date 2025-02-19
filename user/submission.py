@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 import os
-import shelve
+import json
 from werkzeug.utils import secure_filename
 from PIL import Image
 
@@ -8,13 +8,25 @@ user_submissions_bp = Blueprint("user_submissions", __name__)
 
 # Database path
 DB_FOLDER = os.path.join(os.path.dirname(__file__), "../db")
-DB_PATH_SUBMISSIONS = os.path.join(DB_FOLDER, "submissions")
+DB_PATH_SUBMISSIONS = os.path.join(DB_FOLDER, "submissions.json")
 
 # Upload folder
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "../api/uploads")
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+def load_json(db_path):
+    """Load JSON data from a file."""
+    if not os.path.exists(db_path):
+        return {}
+    with open(db_path, "r", encoding="utf-8") as file:
+        return json.load(file)
+
+def save_json(db_path, data):
+    """Save JSON data to a file."""
+    with open(db_path, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4)
 
 def allowed_file(filename):
     """Check if uploaded file is an allowed image format."""
@@ -67,16 +79,23 @@ def submit_item():
 
                 filenames.append(filename)
 
-        # Store submission in shelve database
-        with shelve.open(DB_PATH_SUBMISSIONS, writeback=True) as db:
-            new_id = str(len(db) + 1)  # Generate new ID
-            db[new_id] = {
-                "clothing_name": data["title"],
-                "description": data.get("description", ""),
-                "customerId": "1",  # Assuming user ID 1 for now
-                "tags": data["selectedTags"].split(","),
-                "images": filenames,
-            }
+        # Load existing submissions
+        submissions_db = load_json(DB_PATH_SUBMISSIONS)
+
+        # Generate a new ID
+        new_id = str(len(submissions_db) + 1)
+
+        # Store the submission
+        submissions_db[new_id] = {
+            "clothing_name": data["title"],
+            "description": data.get("description", ""),
+            "customerId": "1",  # Assuming user ID 1 for now
+            "tags": data["selectedTags"].split(","),
+            "images": filenames,
+        }
+
+        # Save to JSON
+        save_json(DB_PATH_SUBMISSIONS, submissions_db)
 
         return jsonify({"message": "Submission successful!"}), 200
 

@@ -1,0 +1,94 @@
+{
+    "6": {
+        "id": "6",
+        "username": "test1",
+        "email": "eayancheong@gmail.com",
+        "password": "$2b$12$kD1hnrSiI6UuPi0cF9aDM.v1sN5vI4NNRb65Na5icyY9FK6e/bNxi",
+        "role": "user",
+        "status": "pending",
+        "failed_attempts": 0,
+        "disabled": false,
+        "disabled_until": null,
+        "verification_token": "6ca98fd5-9981-4c51-8f10-88da058d5f86"
+    },
+    "4": {
+        "id": "4",
+        "username": "AdminThree",
+        "email": "admin3@example.com",
+        "password": "$2b$12$enIucBHf3GVw1v4K1nzd6OVp2YaMWfaWpdCgW1DY6MDqT8.oxoyAW",
+        "role": "admin",
+        "status": "active",
+        "failed_attempts": 0,
+        "disabled": false,
+        "disabled_until": null
+    },
+    "8": {
+        "id": "8",
+        "username": "Eayan",
+        "email": "validemail@gmail.com",
+        "password": "$2b$12$WJNzTIb3YSlH08rAa/if/eze87/5V9tcRhAtdlbN2A0qqnOCTJYiO",
+        "role": "user",
+        "status": "active",
+        "failed_attempts": 0,
+        "disabled": false,
+        "disabled_until": null
+    },
+    "2": {
+        "id": "2",
+        "username": "AdminOne",
+        "email": "admin1@example.com",
+        "password": "$2b$12$fJndKTU3idqF3jT9tTWam.Rz4fjtQTdoipI45L2oO6F.uY7J/nZ5C",
+        "role": "admin",
+        "status": "active",
+        "failed_attempts": 0,
+        "disabled": false,
+        "disabled_until": null
+    },
+    "3": {
+        "id": "3",
+        "username": "AdminTwo",
+        "email": "admin2@example.com",
+        "password": "$2b$12$lgTj9SlFyXv/V2sexqlHuuwnLbQjeEG.AHApkgc6MfdankqwLNFD6",
+        "role": "admin",
+        "status": "active",
+        "failed_attempts": 0,
+        "disabled": true,
+        "disabled_until": 1739860019
+    },
+    "5": {
+        "id": "5",
+        "username": "yo dude lets use a peroper username",
+        "email": "account5@gmail.com",
+        "password": "$2b$12$wkGCUHvQiP8ETbzNgF6AUuSsyFhs4iRt8LNtHteonVfB3UfvSe8Bm",
+        "role": "user",
+        "status": "active",
+        "failed_attempts": 5,
+        "disabled": true,
+        "disabled_until": 1739859993
+    },
+    "7": {
+        "id": "7",
+        "username": "oibn9ofe bsuo[baweoi",
+        "email": "fowuqb@gruio.com",
+        "password": "$2b$12$xwsbIQqJvyNpkOFd2gy40OU9cI6tIzqmX4dAL6sb17YECSIxvBWdm",
+        "role": "user",
+        "status": "active",
+        "failed_attempts": 0,
+        "disabled": false,
+        "disabled_until": null
+    },
+    "1": {
+        "id": "1",
+        "username": "Evelyn",
+        "email": "pigsyys@gmail.com",
+        "password": "$2b$12$RNuXNV9td2Q2XS6CUdLrseYKtkTAmGeg5cfueZ5wW9.AQuRnL.Ubm",
+        "role": "admin",
+        "status": "active",
+        "failed_attempts": 0,
+        "disabled": false,
+        "disabled_until": null,
+        "pfp": "user_1.jpg",
+        "phone": "87654321",
+        "bio": "dsfdsAD fwaef"
+    }
+}

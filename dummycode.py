@@ -1,68 +1,38 @@
 import shelve
 import os
+import json
+import glob
 
-# Path to the products database
-DB_PATH_PRODUCTS = "db/products"
+# ✅ List of database names (without extensions)
+DB_FOLDER = "db"  # Make sure this is the correct path
+db_files = ["tags", "products", "accounts", "submissions", "logs", "feedback", "orders", "ratings", "reports", "wishlist"]
 
-a = {
-    "1": {
-        "id": 1,
-        "name": f"Y2K Camisole",
-        "customer_id": "1",
-        "tags": [f"Women"],
-        "description": f"Its a top",
-        "image_url": f"/uploads/1.jpeg",
-        "wishlisted_users": {}
-    },
-    "2": {
-        "id": 2,
-        "name": f"Yoga Pants",
-        "customer_id": "2",
-        "tags": [f"Women"],
-        "description": f"Its pants",
-        "image_url": f"/uploads/2.jpeg",
-        "wishlisted_users": {}
-    },
-    "3": {
-        "id": 3,
-        "name": f"Denim Skirt",
-        "customer_id": "3",
-        "tags": [f"Women"],
-        "description": f"Its a skirt",
-        "image_url": f"/uploads/3.jpeg",
-        "wishlisted_users": {}
-    },
-    "4": {
-        "id": 4,
-        "name": f"Parka",
-        "customer_id": "1",
-        "tags": [f"Women"],
-        "description": f"Its a parka",
-        "image_url": f"/uploads/4.jpeg",
-        "wishlisted_users": {}
-    },
-    "5": {
-        "id": 5,
-        "name": f"Navy Polo T",
-        "customer_id": "1",
-        "tags": [f"Women"],
-        "description": f"Its a Polo T",
-        "image_url": f"/uploads/5.jpeg",
-        "wishlisted_users": {}
-    },
-    "6": {
-        "id": 6,
-        "name": f"Button Up Shirt",
-        "customer_id": "1",
-        "tags": [f"Women"],
-        "description": f"Its a shirt",
-        "image_url": f"/uploads/6.jpeg",
-        "wishlisted_users": {}
-    }
-}
+def convert_shelve_to_json(db_name):
+    """Read a shelve database and write its contents to a JSON file."""
+    db_path = os.path.join(DB_FOLDER, db_name)
+    json_path = os.path.join(DB_FOLDER, f"{db_name}.json")
 
-# Overwrite the products database with new data
-with shelve.open(DB_PATH_PRODUCTS, writeback=True) as products_db:
-    products_db.clear()  # Remove existing data
-    products_db.update(a)  # Insert new data
-    print("✅ Successfully replaced products.db with new data!")
+    try:
+        # ✅ Open the database
+        with shelve.open(db_path, flag="r") as db:
+            data = dict(db)  # Convert to dictionary
+
+        # ✅ Save to JSON file
+        with open(json_path, "w", encoding="utf-8") as json_file:
+            json.dump(data, json_file, indent=4, ensure_ascii=False)
+
+        print(f"✅ Converted {db_name} → {json_path}")
+
+    except Exception as e:
+        print(f"❌ ERROR converting {db_name}: {e}")
+
+# 🔍 Iterate through all DB files
+for db_file in db_files:
+    possible_db_files = glob.glob(os.path.join(DB_FOLDER, db_file) + ".*")  # Find Shelve files
+
+    if possible_db_files:
+        convert_shelve_to_json(db_file)  # Convert only if the file exists
+    else:
+        print(f"⚠️  {db_file} does not exist in {DB_FOLDER}.")
+
+print("\n🎯 **Database Conversion Complete!** You can now delete the .db files if everything looks good.")

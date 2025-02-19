@@ -1,60 +1,55 @@
 import os
-import shelve
-import time
+import json
 from flask import Blueprint, jsonify
 
-admin_user_bp = Blueprint('user', __name__)
+admin_user_bp = Blueprint("user", __name__)
 
 # Define the path to the database folder
 DB_FOLDER = os.path.join(os.path.dirname(__file__), "../../db")
 
 # Define paths to individual database files
-DB_PATH_ACCOUNT = os.path.join(DB_FOLDER, "accounts")
-DB_PATH_PRODUCTS = os.path.join(DB_FOLDER, "products")
-DB_PATH_WISHLIST = os.path.join(DB_FOLDER, "wishlist")
-DB_PATH_RATINGS = os.path.join(DB_FOLDER, "ratings")
+DB_PATH_ACCOUNTS = os.path.join(DB_FOLDER, "accounts.json")
+DB_PATH_PRODUCTS = os.path.join(DB_FOLDER, "products.json")
+DB_PATH_WISHLIST = os.path.join(DB_FOLDER, "wishlist.json")
+DB_PATH_RATINGS = os.path.join(DB_FOLDER, "ratings.json")
 
 DEFAULT_PFP_URL = "/account.svg"
 
-@admin_user_bp.route('user/<int:user_id>', methods=['GET'])
+def load_json(db_path):
+    """Load JSON data from file."""
+    if not os.path.exists(db_path):
+        return {}
+    with open(db_path, "r", encoding="utf-8") as file:
+        return json.load(file)
+
+@admin_user_bp.route("/user/<int:user_id>", methods=["GET"])
 def get_user_data(user_id):
+    """Retrieve user profile, products, wishlist, and ratings."""
     try:
-        # Fetch account information
-        with shelve.open(DB_PATH_ACCOUNT, writeback=True) as account_db:
-            account = account_db.get(str(user_id))
-            if not account:
-                return jsonify({"error": "User not found"}), 404
+        accounts_db = load_json(DB_PATH_ACCOUNTS)
+        wishlist_db = load_json(DB_PATH_WISHLIST)
+        products_db = load_json(DB_PATH_PRODUCTS)
+        ratings_db = load_json(DB_PATH_RATINGS)
 
-        # Fetch products in the user's wishlist
-        wishlist_products = []
-        with shelve.open(DB_PATH_WISHLIST) as wishlist_db:
-            for product_id, user_ids in wishlist_db.items():
-                if str(user_id) in user_ids:  # Check if user_id is in the wishlist
-                    wishlist_products.append(product_id)
+        account = accounts_db.get(str(user_id))
+        if not account:
+            return jsonify({"error": "User not found"}), 404
 
-        # Fetch product details from products.db
-        wishlist_details = []
-        with shelve.open(DB_PATH_PRODUCTS) as products_db:
-            for product_id in wishlist_products:
-                product = products_db.get(product_id)
-                if product:
-                    wishlist_details.append({
-                        "id": product["id"],
-                        "name": product["name"],
-                        "image": product.get("image_url", ""),
-                        "tags": product.get("tags", [])
-                    })
+        # Fetch wishlist products
+        wishlist_products = wishlist_db.get(str(user_id), [])
+
+        wishlist_details = [
+            {"id": product_id, "name": products_db.get(product_id, {}).get("name", "Unknown"), "image": products_db.get(product_id, {}).get("image_url", ""), "tags": products_db.get(product_id, {}).get("tags", [])}
+            for product_id in wishlist_products
+        ]
 
         # Fetch products listed by the user
-        user_products = []
-        with shelve.open(DB_PATH_PRODUCTS) as products_db:
-            for product_id, product in products_db.items():
-                if product["customer_id"] == user_id:  # Match user ID
-                    user_products.append(product)
+        user_products = [
+            product for product in products_db.values() if str(product.get("customer_id")) == str(user_id)
+        ]
 
         # Fetch ratings given by the user
-        with shelve.open(DB_PATH_RATINGS) as ratings_db:
-            user_ratings = ratings_db.get(str(user_id), {})
+        user_ratings = ratings_db.get(str(user_id), {})
 
         # Prepare response
         user_data = {
@@ -66,10 +61,9 @@ def get_user_data(user_id):
             "wishlist": wishlist_details,
             "ratings": user_ratings,
             "disabled": account.get("disabled", False),
-            "disabled_until": account.get("disabled_until", None)
+            "disabled_until": account.get("disabled_until", None),
         }
 
         return jsonify(user_data), 200
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
